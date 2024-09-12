@@ -7,19 +7,19 @@ public class UserModel implements Serializable {
     private String username;
     private String password;
     private String email;
-    private String fullname;
-    private String images;
+    private int roleid;
+    private String phone;
 
     public UserModel() {
     }
 
-    public UserModel(int id, String username, String password, String email, String fullname, String images) {
+    public UserModel(int id, String username, String password, String email, int roleid, String phone) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.fullname = fullname;
-        this.images = images;
+        this.roleid = roleid;
+        this.phone = phone;
     }
 
     public int getId() {
@@ -54,31 +54,31 @@ public class UserModel implements Serializable {
         this.email = email;
     }
 
-    public String getFullname() {
-        return fullname;
+    public int getRoleid() {
+        return roleid;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setRoleid(int roleid) {
+        this.roleid = roleid;
     }
 
-    public String getImages() {
-        return images;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setImages(String images) {
-        this.images = images;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     @Override
     public String toString() {
         return "UserModel{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", fullname='" + fullname + '\'' +
-                ", images='" + images + '\'' +
+                ", roleid=" + roleid +
+                ", phone='" + phone + '\'' +
                 '}';
     }
 }

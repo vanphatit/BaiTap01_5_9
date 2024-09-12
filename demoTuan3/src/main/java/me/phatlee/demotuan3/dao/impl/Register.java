@@ -8,12 +8,12 @@ public class Register {
     // This class is used to check if the user can register or not
     // If the user can register, the user's information will be inserted into the database
     // Username input valid when it is not equal to previous username
-    public boolean checkRegister(String username, String password, String email, String fullname) {
-        if(username == null || password == null || email == null || fullname == null) {
+    public boolean checkRegister(String username, String password, String email, int roleid, String phone) {
+        if(username == null || password == null || email == null || phone == null) {
             return false;
         }
 
-        if(username.isEmpty() || password.isEmpty() || email.isEmpty() || fullname.isEmpty())
+        if(username.isEmpty() || password.isEmpty() || email.isEmpty() || phone.isEmpty())
             return false;
 
         UserDaoimplData userDaoimplData = new UserDaoimplData();
@@ -28,7 +28,8 @@ public class Register {
         userNew.setUsername(username);
         userNew.setPassword(password);
         userNew.setEmail(email);
-        userNew.setFullname(fullname);
+        userNew.setRoleid(roleid);
+        userNew.setPhone(phone);
 
         userDaoimplData.insert(userNew);
         return true;
@@ -36,6 +37,6 @@ public class Register {
 
     public static void main(String[] args) {
         Register register = new Register();
-        System.out.println(register.checkRegister("phatle", "phatlee", "phatlee", "phatlee"));
+        System.out.println(register.checkRegister("phatle", "phatlee", "phatlee", 1, "0124578963"));
     }
 }
