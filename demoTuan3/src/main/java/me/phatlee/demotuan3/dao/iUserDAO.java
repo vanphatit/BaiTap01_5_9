@@ -6,7 +6,8 @@ import java.util.List;
 
 public interface iUserDAO {
     List<UserModel> findAll();
-    UserModel findById(String id);
+    UserModel findByEmail(String id);
     UserModel findByUsername(String username);
-    void insert(UserModel user);
+    boolean insert(UserModel user);
+    boolean update(UserModel user);
 }

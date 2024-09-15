@@ -10,7 +10,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class UserDaoimplData extends DBconnectMySQL implements iUserDAO {
 
     public Connection conn = null;
@@ -47,12 +46,12 @@ public class UserDaoimplData extends DBconnectMySQL implements iUserDAO {
     }
 
     @Override
-    public UserModel findById(String id) {
-        String sql = "SELECT * FROM users WHERE id = ?";
+    public UserModel findByEmail(String email) {
+        String sql = "SELECT * FROM users WHERE email = ?";
         try {
             conn = super.getDatabaseConnection();
             preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1, id);
+            preparedStatement.setString(1, email);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 UserModel user = new UserModel();
@@ -95,8 +94,8 @@ public class UserDaoimplData extends DBconnectMySQL implements iUserDAO {
     }
 
     @Override
-    public void insert(UserModel user) {
-        String sql = "INSERT INTO users(username, password, email, fullname, images) VALUES(?,?,?,?,?)";
+    public boolean insert(UserModel user) {
+        String sql = "INSERT INTO users(username, password, email, roleid, phone) VALUES(?,?,?,?,?)";
         try {
             conn = super.getDatabaseConnection();
             preparedStatement = conn.prepareStatement(sql);
@@ -106,8 +105,30 @@ public class UserDaoimplData extends DBconnectMySQL implements iUserDAO {
             preparedStatement.setInt(4, user.getRoleid());
             preparedStatement.setString(5, user.getPhone());
             preparedStatement.executeUpdate();
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean update(UserModel user) {
+        String sql = "UPDATE users SET username = ?, password = ?, email = ?, roleid = ?, phone = ? WHERE id = ?";
+        try {
+            conn = super.getDatabaseConnection();
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, user.getUsername());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(3, user.getEmail());
+            preparedStatement.setInt(4, user.getRoleid());
+            preparedStatement.setString(5, user.getPhone());
+            preparedStatement.setInt(6, user.getId());
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

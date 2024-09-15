@@ -77,6 +77,7 @@
                 display: block;
                 float: none;
             }
+
             .cancelbtn {
                 width: 100%;
             }
@@ -88,6 +89,10 @@
     <div class="imgcontainer">
         <img src="img_avatar2.png" alt="Avatar" class="avatar">
     </div>
+
+    <c:if test="${error !=null}">
+        <h3 class="alert alertdanger">${error}</h3>
+    </c:if>
 
     <div class="container">
         <label for="uname"><b>Username</b></label>
@@ -104,7 +109,7 @@
 
     <div class="container" style="background-color:#f1f1f1">
         <button type="button" class="cancelbtn">Cancel</button>
-        <span class="psw">Forgot <a href="#">password?</a></span>
+        <span class="psw">Forgot <a href="/forgot-password">password?</a></span>
     </div>
 </form>
 </body>
