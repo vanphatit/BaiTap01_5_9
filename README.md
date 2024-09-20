@@ -9,3 +9,6 @@ BÀI TẬP TUẦN 01:
 
 BÀI TẬP TUẦN 02: -> PROJECT demoTuan3
 ![image](https://github.com/user-attachments/assets/a07f1959-6515-4418-9b11-3993d9701199)
+
+BÀI TẬP TUẦN 05: -> PROJECT demoTuan3
+![image](https://github.com/user-attachments/assets/c231f234-3565-4240-8ea0-faa5d73277a6)
