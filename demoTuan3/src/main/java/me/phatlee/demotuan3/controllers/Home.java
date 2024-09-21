@@ -25,7 +25,7 @@ public class Home extends HttpServlet {
             }
         }
 
-        request.getRequestDispatcher("/view/home.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/web/home.jsp").forward(request, response);
     }
 
     @Override

@@ -10,4 +10,5 @@ public interface iUserDAO {
     UserModel findByUsername(String username);
     boolean insert(UserModel user);
     boolean update(UserModel user);
+    boolean insertWithImage(UserModel user);
 }

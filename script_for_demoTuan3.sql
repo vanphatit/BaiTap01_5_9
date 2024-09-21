@@ -10,7 +10,9 @@ CREATE TABLE users (
   password VARCHAR(50),
   email VARCHAR(50) NULL,
   roleid INT,
+  fullname VARCHAR(100),
   phone VARCHAR(10) NULL,
+  image VARCHAR(1000) NULL,
   PRIMARY KEY (`id`));
 
 CREATE TABLE roles (
@@ -22,10 +24,10 @@ INSERT INTO roles (roleid, name) VALUES
 (1, 'admin'),
 (2, 'user');
   
-INSERT INTO users (username, password, email, roleid, phone) VALUES
-('john_doe', 'password123', 'john@example.com', 1, '0123456789'), -- Admin
-('jane_smith', 'abc$5678', 'jane@example.com', 2, '0987654321'), -- User
-('alice_wonder', 'alice@2023', 'alice@example.com', 2, '0912345678'), -- User
-('bob_builder', 'builder99', 'bob@example.com', 2, '0856781234'), -- User
-('charlie_brown', 'charlie_pass', 'charlie@example.com', 1, '0765432198'); -- Admin
+INSERT INTO users (username, fullname, password, email, roleid, phone) VALUES
+('john_doe', 'john_doe', '123', 'john@example.com', 1, '0123456789'), -- Admin
+('jane_smith', 'jane_smith', '123', 'jane@example.com', 2, '0987654321'), -- User
+('alice_wonder', 'alice_wonder', '123', 'alice@example.com', 2, '0912345678'), -- User
+('bob_builder', 'bob_builder', '123', 'bob@example.com', 2, '0856781234'), -- User
+('charlie_brown', 'charlie_brown', '123', 'charlie@example.com', 1, '0765432198'); -- Admin
 

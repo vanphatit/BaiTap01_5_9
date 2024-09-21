@@ -64,7 +64,7 @@ public class RegisterController extends HttpServlet {
             return;
         }
 
-        UserModel user = new UserModel(0, username, password, email, roleid, phone);
+        UserModel user = new UserModel(0, username, password, email, roleid, username, phone);
 
         iUserService service = new UserServiceImpl();
         String errorMsg = "";
@@ -76,7 +76,7 @@ public class RegisterController extends HttpServlet {
             return;
         }
 
-        if (service.register(username, password, email, roleid, phone)) {
+        if (service.register(username, password, email, roleid, phone, username)) {
             response.sendRedirect(request.getContextPath() + "/login");
         } else {
             errorMsg = "Đăng ký thất bại!";

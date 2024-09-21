@@ -8,18 +8,32 @@ public class UserModel implements Serializable {
     private String password;
     private String email;
     private int roleid;
+    private String fullname;
     private String phone;
+    private String image;
 
     public UserModel() {
     }
 
-    public UserModel(int id, String username, String password, String email, int roleid, String phone) {
+    public UserModel(int id, String username, String password, String email, int roleid, String fullname, String phone) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.roleid = roleid;
+        this.fullname = fullname;
         this.phone = phone;
+    }
+
+    public UserModel(int id, String username, String password, String email, int roleid, String fullname, String phone, String image) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.roleid = roleid;
+        this.fullname = fullname;
+        this.phone = phone;
+        this.image = image;
     }
 
     public int getId() {
@@ -62,12 +76,28 @@ public class UserModel implements Serializable {
         this.roleid = roleid;
     }
 
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
     public String getPhone() {
         return phone;
     }
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override
@@ -78,7 +108,9 @@ public class UserModel implements Serializable {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", roleid=" + roleid +
+                ", fullname='" + fullname + '\'' +
                 ", phone='" + phone + '\'' +
+                ", image='" + image + '\'' +
                 '}';
     }
 }

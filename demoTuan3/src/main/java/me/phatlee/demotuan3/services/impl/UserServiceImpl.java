@@ -24,8 +24,8 @@ public class UserServiceImpl implements iUserService {
     }
 
     @Override
-    public boolean register(String username, String password, String email, int roleid, String phone) {
-        return userDAO.insert(new UserModel(0,username, password, email, roleid, phone));
+    public boolean register(String username, String password, String email, int roleid, String phone, String fullname) {
+        return userDAO.insert(new UserModel(0,username, password, email, roleid, phone, fullname));
     }
 
     @Override
@@ -46,11 +46,17 @@ public class UserServiceImpl implements iUserService {
         return false;
     }
 
+    @Override
+    public boolean update(UserModel user) {
+        return userDAO.update(user);
+    }
+
     public static void main(String[] args) {
         UserServiceImpl userService = new UserServiceImpl();
-        //System.out.println(userService.checkLogin("john_doe", "password123"));
+//        System.out.println(userService.checkLogin("john_doe", "password123"));
 //        System.out.println(userService.register("ghetbug", "password123@",
 //                "hi@gmail.com", 2, "1234567890"));
-        System.out.println(userService.checkExist("hi", "john@example.com"));
+        //System.out.println(userService.checkExist("hi", "john@example.com"));
+        System.out.println(userService.findByUsername("jane_smith").getFullname());
     }
 }

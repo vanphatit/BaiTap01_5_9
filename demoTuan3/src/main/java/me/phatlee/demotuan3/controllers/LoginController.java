@@ -49,10 +49,6 @@ public class LoginController extends HttpServlet {
 
         String error = "";
         boolean hasError = false;
-        boolean isRememberMe = false;
-        if("on".equals(remember)) {
-            isRememberMe = true;
-        }
 
         if(username == null || username.isEmpty()) {
             error = "Username is required!";
@@ -73,21 +69,16 @@ public class LoginController extends HttpServlet {
         }
 
         if(hasError) {
+            error = "Tài khoản hoặc mật khẩu không đúng";
             request.setAttribute("error", error);
             request.getRequestDispatcher("/view/login.jsp").forward(request, response);
         } else {
             HttpSession session = request.getSession(true);
             session.setAttribute("account", user);
-            if(isRememberMe) {
                 Cookie cookie = new Cookie("username", username);
                 cookie.setMaxAge(30*60);
                 response.addCookie(cookie);
                 response.sendRedirect(request.getContextPath() + "/waiting");
-            } else {
-                error = "Tài khoản hoặc mật khẩu không đúng";
-                request.setAttribute("alert", error);
-                request.getRequestDispatcher("/views/login.jsp").forward(request, response);
-            }
         }
 
     }
