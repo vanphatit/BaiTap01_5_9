@@ -20,6 +20,13 @@ CREATE TABLE roles (
     name VARCHAR(100) 
 );
 
+CREATE TABLE categories(
+	categoryID INT PRIMARY KEY AUTO_INCREMENT, 
+    categoryName NVARCHAR(255),
+    images NVARCHAR(500),
+    status INT
+);
+
 INSERT INTO roles (roleid, name) VALUES
 (1, 'admin'),
 (2, 'user');
@@ -31,3 +38,6 @@ INSERT INTO users (username, fullname, password, email, roleid, phone) VALUES
 ('bob_builder', 'bob_builder', '123', 'bob@example.com', 2, '0856781234'), -- User
 ('charlie_brown', 'charlie_brown', '123', 'charlie@example.com', 1, '0765432198'); -- Admin
 
+INSERT INTO categories (CategoryName, images, status) VALUES
+('Phim hành động', 'h1CBC93F0.png', 1),
+('Anime', 'https://cdn.popsww.com/blog/sites/2/2023/06/thanh-guom-diet-quy-season-4.jpg', 1);
