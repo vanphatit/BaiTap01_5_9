@@ -51,10 +51,10 @@ public class ForgotPasswordController extends HttpServlet {
             return;
         }
         else {
-            if(userService.updatePassword(username, password)) {
+            try {
+                userService.updatePassword(username, password);
                 request.getRequestDispatcher("/view/login.jsp").forward(request, response);
-            }
-            else {
+            } catch (Exception e) {
                 request.setAttribute("error", "Đổi mật khẩu thất bại!");
                 request.getRequestDispatcher("/view/forgot-password.jsp").forward(request, response);
                 return;

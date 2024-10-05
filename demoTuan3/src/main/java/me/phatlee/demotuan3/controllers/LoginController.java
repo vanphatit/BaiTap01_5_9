@@ -3,7 +3,7 @@ package me.phatlee.demotuan3.controllers;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-import me.phatlee.demotuan3.models.UserModel;
+import me.phatlee.demotuan3.entity.User;
 import me.phatlee.demotuan3.services.iUserService;
 import me.phatlee.demotuan3.services.impl.UserServiceImpl;
 
@@ -61,7 +61,7 @@ public class LoginController extends HttpServlet {
         }
 
         iUserService userService = new UserServiceImpl();
-        UserModel user = userService.checkLogin(username, password);
+        User user = userService.checkLogin(username, password);
 
         if(user == null) {
             error = "Username or password is incorrect!";

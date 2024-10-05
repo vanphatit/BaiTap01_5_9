@@ -2,7 +2,7 @@ package me.phatlee.demotuan3.services.impl;
 
 import me.phatlee.demotuan3.dao.iCategoryDAO;
 import me.phatlee.demotuan3.dao.impl.CategoryDAOimpl;
-import me.phatlee.demotuan3.models.CategoryModel;
+import me.phatlee.demotuan3.entity.Category;
 import me.phatlee.demotuan3.services.iCategoryService;
 
 import java.util.List;
@@ -10,17 +10,17 @@ import java.util.List;
 public class CategoryServiceImpl implements iCategoryService {
     public iCategoryDAO categoryDAOimpl = new CategoryDAOimpl();
     @Override
-    public List<CategoryModel> findAll() {
+    public List<Category> findAll() {
         return categoryDAOimpl.findAll();
     }
 
     @Override
-    public CategoryModel findById(int id) {
+    public Category findById(int id) {
         return categoryDAOimpl.findById(id);
     }
 
     @Override
-    public void insert(CategoryModel category) {
+    public void insert(Category category) {
         if(categoryDAOimpl.findName(category.getCategoryName()).equals(category.getCategoryName())){
             System.out.println("Category name already exists");
             return;
@@ -29,7 +29,7 @@ public class CategoryServiceImpl implements iCategoryService {
     }
 
     @Override
-    public void update(CategoryModel category) {
+    public void update(Category category) {
         categoryDAOimpl.update(category);
     }
 
@@ -39,7 +39,7 @@ public class CategoryServiceImpl implements iCategoryService {
     }
 
     @Override
-    public List<CategoryModel> findName(String keyword) {
+    public List<Category> findName(String keyword) {
         return categoryDAOimpl.findName(keyword);
     }
 

@@ -1,7 +1,14 @@
 package me.phatlee.demotuan3.dao.impl;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 import me.phatlee.demotuan3.configs.DBconnectMySQL;
+import me.phatlee.demotuan3.configs.JPAConfig;
 import me.phatlee.demotuan3.dao.iCategoryDAO;
+import me.phatlee.demotuan3.entity.Category;
+import me.phatlee.demotuan3.entity.User;
 import me.phatlee.demotuan3.models.CategoryModel;
 
 import java.sql.Connection;
@@ -11,151 +18,122 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDAOimpl implements iCategoryDAO {
-    public Connection conn = null;
-    public PreparedStatement ps = null;
-    public ResultSet rs = null;
 
     @Override
-    public List<CategoryModel> findAll() {
-        String sql = "SELECT * FROM categories";
-        List<CategoryModel> categories = new ArrayList<>();
-        try {
-            conn = DBconnectMySQL.getDatabaseConnection();
-            ps = conn.prepareStatement(sql);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                CategoryModel category = new CategoryModel();
-                category.setCategoryID(rs.getInt("categoryID"));
-                category.setCategoryName(rs.getString("categoryName"));
-                category.setImages(rs.getString("images"));
-                category.setStatus(rs.getInt("status"));
-                categories.add(category);
-            }
-            conn.close();
-            ps.close();
-            rs.close();
-            return categories;
-        } catch (Exception e) {
+    public void insert(Category category) {
+        EntityManager enma = JPAConfig.getEntityManager();
+        EntityTransaction trans = enma.getTransaction();
+        try
+        {
+            trans.begin();
+            enma.persist(category);
+            trans.commit();
+        } catch (Exception e)
+        {
             e.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
-    public CategoryModel findById(int id) {
-        String sql = "SELECT * FROM categories WHERE categoryID = ?";
-        CategoryModel category = new CategoryModel();
-        try {
-            conn = DBconnectMySQL.getDatabaseConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, id);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                category.setCategoryID(rs.getInt("categoryID"));
-                category.setCategoryName(rs.getString("categoryName"));
-                category.setImages(rs.getString("images"));
-                category.setStatus(rs.getInt("status"));
-            }
-            conn.close();
-            ps.close();
-            rs.close();
-            return category;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
-    public void insert(CategoryModel category) {
-        String sql = "INSERT INTO categories(categoryName, images, status) VALUES(?, ?, ?)";
-        try {
-            conn = DBconnectMySQL.getDatabaseConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, category.getCategoryName());
-            ps.setString(2, category.getImages());
-            ps.setInt(3, category.getStatus());
-            ps.executeUpdate();
-            conn.close();
-            ps.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+            trans.rollback();
+            throw e;
+        } finally
+        {
+            enma.close();
         }
     }
 
     @Override
-    public void update(CategoryModel category) {
-        String sql = "UPDATE categories SET categoryName = ?, images = ?, status = ? WHERE categoryID = ?";
-        try {
-            conn = DBconnectMySQL.getDatabaseConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, category.getCategoryName());
-            ps.setString(2, category.getImages());
-            ps.setInt(3, category.getStatus());
-            ps.setInt(4, category.getCategoryID());
-            ps.executeUpdate();
-            conn.close();
-            ps.close();
-        } catch (Exception e) {
+    public void update(Category category) {
+        EntityManager enma = JPAConfig.getEntityManager();
+        EntityTransaction trans = enma.getTransaction();
+        try
+        {
+            trans.begin();
+            enma.merge(category);
+            trans.commit();
+        } catch (Exception e)
+        {
             e.printStackTrace();
+            trans.rollback();
+            throw e;
+        } finally
+        {
+            enma.close();
         }
     }
 
     @Override
     public void delete(int id) {
-        String sql = "DELETE FROM categories WHERE categoryID = ?";
-        try {
-            conn = DBconnectMySQL.getDatabaseConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, id);
-            ps.executeUpdate();
-            conn.close();
-            ps.close();
-        } catch (Exception e) {
+        EntityManager enma = JPAConfig.getEntityManager();
+        EntityTransaction trans = enma.getTransaction();
+        try
+        {
+            trans.begin();
+            User user = enma.find(User.class, id);
+            enma.remove(user);
+            trans.commit();
+        } catch (Exception e)
+        {
             e.printStackTrace();
+            trans.rollback();
+            throw e;
+        } finally
+        {
+            enma.close();
         }
     }
 
     @Override
-    public List<CategoryModel> findName(String keyword) {
-        String sql = "SELECT * FROM categories WHERE categoryName LIKE ?";
-        List<CategoryModel> categories = new ArrayList<>();
-        try {
-            conn = DBconnectMySQL.getDatabaseConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, "%" + keyword + "%");
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                CategoryModel category = new CategoryModel();
-                category.setCategoryID(rs.getInt("categoryID"));
-                category.setCategoryName(rs.getString("categoryName"));
-                category.setImages(rs.getString("images"));
-                category.setStatus(rs.getInt("status"));
-                categories.add(category);
-            }
-            conn.close();
-            ps.close();
-            rs.close();
-            return categories;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+    public List<Category> findName(String keyword) {
+        EntityManager enma = JPAConfig.getEntityManager();
+        String jpql = "SELECT c FROM Category c WHERE c.categoryName LIKE :categoryName";
+        TypedQuery<Category> query = enma.createQuery(jpql, Category.class);
+        query.setParameter("categoryName", "%" + keyword + "%");
+        return query.getResultList();
     }
 
     @Override
-    public void updateStatus(int id, int status) { // 0: inactive, 1: active
-        String sql = "UPDATE categories SET status = ? WHERE categoryID = ?";
-        try {
-            conn = DBconnectMySQL.getDatabaseConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, status == 1 ? 0 : 1);
-            ps.setInt(2, id);
-            ps.executeUpdate();
-            conn.close();
-            ps.close();
+    public void updateStatus(int id, int status) {
+        EntityManager enma = JPAConfig.getEntityManager();
+        EntityTransaction trans = enma.getTransaction();
+        try{
+            trans.begin();
+            Category category = enma.find(Category.class, id);
+            category.setStatus(status);
+            enma.merge(category);
+            trans.commit();
         } catch (Exception e) {
             e.printStackTrace();
+            trans.rollback();
+            throw e;
+        } finally {
+            enma.close();
         }
+    }
+
+    @Override
+    public Category findById(int categoryId) {
+        EntityManager enma = JPAConfig.getEntityManager();
+        return enma.find(Category.class, categoryId);
+    }
+
+    @Override
+    public List<Category> findAll() {
+        EntityManager enma = JPAConfig.getEntityManager();
+        TypedQuery<Category> query = enma.createNamedQuery("Category.findAll", Category.class);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Category> findAll(int page, int pageSize) {
+        EntityManager enma = JPAConfig.getEntityManager();
+        TypedQuery<Category> query = enma.createNamedQuery("Category.findAll", Category.class);
+        query.setFirstResult(page * pageSize);
+        query.setMaxResults(pageSize);
+        return query.getResultList();
+    }
+
+    @Override
+    public int count() {
+        EntityManager enma = JPAConfig.getEntityManager();
+        TypedQuery<Long> query = enma.createQuery("SELECT COUNT(c) FROM Category c", Long.class);
+        return query.getSingleResult().intValue();
     }
 }

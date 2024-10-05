@@ -3,7 +3,7 @@ package me.phatlee.demotuan3.controllers;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-import me.phatlee.demotuan3.models.UserModel;
+import me.phatlee.demotuan3.entity.User;
 import me.phatlee.demotuan3.services.iUserService;
 import me.phatlee.demotuan3.services.impl.UserServiceImpl;
 
@@ -28,7 +28,7 @@ public class ProfileController extends HttpServlet {
             }
         }
 
-        UserModel user = userService.findByUsername(username);
+        User user = userService.findByUsername(username);
 
         // Set attributes in the request
         request.setAttribute("username", username);
@@ -59,7 +59,7 @@ public class ProfileController extends HttpServlet {
         }
 
         // Update user information
-        UserModel user = userService.findByUsername(username);
+        User user = userService.findByUsername(username);
         user.setPhone(phone);
         user.setFullname(fullname);
         user.setEmail(email);

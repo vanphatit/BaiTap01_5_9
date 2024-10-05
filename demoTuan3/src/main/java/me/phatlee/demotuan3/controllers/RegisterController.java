@@ -3,7 +3,7 @@ package me.phatlee.demotuan3.controllers;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-import me.phatlee.demotuan3.models.UserModel;
+import me.phatlee.demotuan3.entity.User;
 import me.phatlee.demotuan3.services.iUserService;
 import me.phatlee.demotuan3.services.impl.UserServiceImpl;
 
@@ -64,7 +64,12 @@ public class RegisterController extends HttpServlet {
             return;
         }
 
-        UserModel user = new UserModel(0, username, password, email, roleid, username, phone);
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setEmail(email);
+        user.setRoleid(roleid);
+        user.setPhone(phone);
 
         iUserService service = new UserServiceImpl();
         String errorMsg = "";
@@ -76,9 +81,11 @@ public class RegisterController extends HttpServlet {
             return;
         }
 
-        if (service.register(username, password, email, roleid, phone, username)) {
+        try{
+            service.register(username, password, email, roleid, phone, username);
             response.sendRedirect(request.getContextPath() + "/login");
-        } else {
+        } catch (Exception e) {
+            e.printStackTrace();
             errorMsg = "Đăng ký thất bại!";
             request.setAttribute("error", errorMsg);
             request.getRequestDispatcher("/view/register.jsp").forward(request, response);

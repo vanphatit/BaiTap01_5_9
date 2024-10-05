@@ -1,15 +1,18 @@
 package me.phatlee.demotuan3.dao;
 
-import me.phatlee.demotuan3.models.CategoryModel;
+import me.phatlee.demotuan3.entity.Category;
 
 import java.util.List;
 
 public interface iCategoryDAO {
-    List<CategoryModel> findAll();
-    CategoryModel findById(int id);
-    void insert(CategoryModel category);
-    void update(CategoryModel category);
+    void insert(Category category);
+    void update(Category category);
     void delete(int id);
-    List<CategoryModel> findName(String keyword);
+    List<Category> findName(String keyword);
     void updateStatus(int id, int status);
+
+    Category findById(int categoryId);
+    List<Category> findAll();
+    List<Category> findAll(int page, int pageSize);
+    int count();
 }

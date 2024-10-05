@@ -2,7 +2,7 @@ package me.phatlee.demotuan3.controllers;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-import me.phatlee.demotuan3.models.UserModel;
+import me.phatlee.demotuan3.entity.User;
 
 import java.io.IOException;
 
@@ -12,7 +12,7 @@ public class WaitingController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         if(session != null & session.getAttribute("account") != null) {
-            UserModel user = (UserModel) session.getAttribute("account");
+            User user = (User) session.getAttribute("account");
             request.setAttribute("username", user.getUsername());
             if(user.getRoleid() == 1) {
                 response.sendRedirect(request.getContextPath() + "/admin/dashboard");

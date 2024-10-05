@@ -3,7 +3,7 @@ package me.phatlee.demotuan3.controllers.admin;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-import me.phatlee.demotuan3.models.CategoryModel;
+import me.phatlee.demotuan3.entity.Category;
 import me.phatlee.demotuan3.services.iCategoryService;
 import me.phatlee.demotuan3.services.impl.CategoryServiceImpl;
 
@@ -30,11 +30,11 @@ public class CategoryController extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         String url = request.getRequestURI();
         if(url.contains("/admin/categories")){
-            List<CategoryModel> categories = categoryService.findAll();
+            List<Category> categories = categoryService.findAll();
             request.setAttribute("listcate", categories);
             request.getRequestDispatcher("/view/admin/category-list.jsp").forward(request, response);
         } else if(url.contains("/admin/category/edit")){
-            CategoryModel category =
+            Category category =
                     categoryService.findById(Integer.parseInt(request.getParameter("id")));
             request.setAttribute("cate", category);
             request.getRequestDispatcher("/view/admin/category-edit.jsp").forward(request, response);
@@ -53,7 +53,7 @@ public class CategoryController extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         String url = request.getRequestURI();
         if(url.contains("/admin/category/update")){
-            CategoryModel category = new CategoryModel();
+            Category category = new Category();
             category.setCategoryID(Integer.parseInt(request.getParameter("categoryid")));
             category.setCategoryName(request.getParameter("categoryname"));
             category.setStatus(Integer.parseInt(request.getParameter("status")));
@@ -85,7 +85,7 @@ public class CategoryController extends HttpServlet {
             categoryService.update(category);
             response.sendRedirect( request.getContextPath() + "/admin/categories");
         } else if(url.contains("/admin/category/insert")){
-            CategoryModel category = new CategoryModel();
+            Category category = new Category();
             category.setCategoryName(request.getParameter("categoryname"));
             category.setStatus(Integer.parseInt(request.getParameter("status")));
             String fname = "";
