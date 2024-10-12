@@ -1,9 +1,17 @@
 package me.phatlee.demotuan3.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Entity
 @Table(name="users")
 @NamedQuery(name="User.findAll", query="SELECT u FROM User u")
@@ -19,6 +27,7 @@ public class User implements Serializable {
     @Column(name = "password", length = 50, nullable = false)
     private String password;
 
+    @Email(message = "Email should be valid")
     @Column(name = "email", length = 50, nullable = true)
     private String email;
 
@@ -28,78 +37,10 @@ public class User implements Serializable {
     @Column(name = "fullname", length = 100, nullable = false)
     private String fullname;
 
+    @Pattern(regexp = "0\\d{9}", message = "Phone number must be 10 digits")
     @Column(name = "phone", length = 10, nullable = true)
     private String phone;
 
     @Column(name = "image", length = 1000, nullable = true)
     private String image;
-
-    // Default constructor
-    public User() {
-    }
-
-    // Getters and Setters
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public int getRoleid() {
-        return roleid;
-    }
-
-    public void setRoleid(int roleid) {
-        this.roleid = roleid;
-    }
-
-    public String getFullname() {
-        return fullname;
-    }
-
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
 }

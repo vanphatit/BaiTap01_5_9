@@ -8,6 +8,7 @@
         <class>me.phatlee.demotuan3.entity.Category</class>
         <class>me.phatlee.demotuan3.entity.User</class>
         <class>me.phatlee.demotuan3.entity.Role</class>
+        <class>me.phatlee.demotuan3.entity.Video</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver"

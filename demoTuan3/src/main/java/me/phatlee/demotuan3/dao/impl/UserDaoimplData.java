@@ -1,9 +1,6 @@
 package me.phatlee.demotuan3.dao.impl;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
 import me.phatlee.demotuan3.configs.JPAConfig;
 import me.phatlee.demotuan3.dao.iUserDAO;
 import me.phatlee.demotuan3.entity.User;
@@ -26,17 +23,25 @@ public class UserDaoimplData implements iUserDAO {
     @Override
     public User findByEmail(String email) {
         EntityManager enma = JPAConfig.getEntityManager();
-        TypedQuery<User> query = enma.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class);
-        query.setParameter("email", email);
-        return query.getSingleResult();
+        try{
+            TypedQuery<User> query = enma.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class);
+            query.setParameter("email", email);
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Override
     public User findByUsername(String username) {
-        EntityManager enma = JPAConfig.getEntityManager();
-        TypedQuery<User> query = enma.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class);
-        query.setParameter("username", username);
-        return query.getSingleResult();
+        try{
+            EntityManager enma = JPAConfig.getEntityManager();
+            TypedQuery<User> query = enma.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class);
+            query.setParameter("username", username);
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Override
